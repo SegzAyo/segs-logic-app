@@ -24,4 +24,4 @@ jobs:
           azcliversion: 2.30.0
           inlineScript: |
             az group create -l westeurope -n segun-rg-dev
-            az deployment group create -g Segun-rg-dev --template-file ./segsLogicApps/LogicApp.json --parameters segsLogicApps/segsLogicApps/LogicApp.parameters.json --parameters password=${{secrets.LOGIC_APP_AUTH}}
+            az deployment group create -g Segun-rg-dev --template-file ./segsLogicApps/LogicApp.json --parameters ./segsLogicApps/LogicApp.parameters.json --parameters password=${{secrets.LOGIC_APP_AUTH}}
