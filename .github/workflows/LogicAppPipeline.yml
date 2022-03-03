@@ -1,0 +1,27 @@
+name: Deploy logic apps
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: 'Login via Azure CLI'
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          
+      - name: Azure CLI script
+        uses: azure/CLI@v1
+        with:
+          azcliversion: 2.30.0
+          inlineScript: |
+            az group create -l westeurope -n keen-rg-dev
+            az deployment group create -g Segun-rg-dev --template-file ./segsLogicApps/LogicApp.json --parameters ./segsLogicApps/segsLogicApps/LogicApp.parameter.json --parameters password=${{secrets.LOGIC_APP_AUTH}}
